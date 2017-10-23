@@ -1,6 +1,7 @@
 import { Pyrite } from "pyrite";
 import { PyriteConnect } from "pyrite-connect";
 import { EmitterPlugin } from "pyrite-connect-emitter";
+
 import { router } from "./router";
 
 const connect = new PyriteConnect({

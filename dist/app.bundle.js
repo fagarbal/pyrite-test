@@ -1068,6 +1068,25 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var pyrite_1 = __webpack_require__(11);
+exports.Pyrite = pyrite_1.Pyrite;
+exports.core = pyrite_1.core;
+var decorators_1 = __webpack_require__(29);
+exports.Component = decorators_1.Component;
+exports.Render = decorators_1.Render;
+exports.Inject = decorators_1.Inject;
+exports.Attributes = decorators_1.Attributes;
+exports.Refs = decorators_1.Refs;
+exports.Children = decorators_1.Children;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(setImmediate, global) {;(function() {
 "use strict"
 function Vnode(tag, key, attrs0, children, text, dom) {
@@ -2314,7 +2333,7 @@ else window.m = m
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 /**
@@ -2357,7 +2376,7 @@ exports.decode = function(qs){
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -2367,22 +2386,6 @@ module.exports = function(a, b){
   a.prototype = new fn;
   a.prototype.constructor = a;
 };
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var pyrite_1 = __webpack_require__(11);
-exports.Pyrite = pyrite_1.Pyrite;
-exports.core = pyrite_1.core;
-var decorators_1 = __webpack_require__(29);
-exports.Component = decorators_1.Component;
-exports.Render = decorators_1.Render;
-exports.Inject = decorators_1.Inject;
-
 
 /***/ }),
 /* 8 */
@@ -3004,7 +3007,7 @@ Transport.prototype.onClose = function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var m = __webpack_require__(4);
+var m = __webpack_require__(5);
 __webpack_require__(28);
 exports.Injections = {};
 exports.core = m;
@@ -4019,9 +4022,9 @@ function polling (opts) {
  */
 
 var Transport = __webpack_require__(10);
-var parseqs = __webpack_require__(5);
+var parseqs = __webpack_require__(6);
 var parser = __webpack_require__(3);
-var inherit = __webpack_require__(6);
+var inherit = __webpack_require__(7);
 var yeast = __webpack_require__(20);
 var debug = __webpack_require__(1)('engine.io-client:polling');
 
@@ -4366,7 +4369,7 @@ var toArray = __webpack_require__(58);
 var on = __webpack_require__(23);
 var bind = __webpack_require__(24);
 var debug = __webpack_require__(1)('socket.io-client:socket');
-var parseqs = __webpack_require__(5);
+var parseqs = __webpack_require__(6);
 
 /**
  * Module exports.
@@ -4841,7 +4844,7 @@ module.exports = function(obj, fn){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(7);
+const pyrite_1 = __webpack_require__(4);
 const pyrite_connect_1 = __webpack_require__(30);
 const pyrite_connect_emitter_1 = __webpack_require__(37);
 const router_1 = __webpack_require__(60);
@@ -5127,7 +5130,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var m = __webpack_require__(4);
+var m = __webpack_require__(5);
 var pyrite_1 = __webpack_require__(11);
 function Render(selector, attributes) {
     var children = [];
@@ -5149,19 +5152,28 @@ function Component(template) {
                 delete target.prototype.__inject;
             }
             var output = new target(this);
-            if (this.attrs) {
+            var attrs = target.prototype.__attributes;
+            if (attrs) {
+                output[attrs] = {};
                 Object.keys(this.attrs).forEach(function (attr) {
-                    output[attr] = _this.attrs[attr];
+                    output[attrs][attr] = _this.attrs[attr];
                 });
             }
-            output.refs = {};
-            setTimeout(function () {
-                var elements = _this.dom.querySelectorAll("[ref]");
-                elements.forEach(function (element) {
-                    var refName = element.getAttribute("ref");
-                    output.refs[refName] = element;
+            var refs = target.prototype.__refs;
+            if (refs) {
+                output[refs] = {};
+                setTimeout(function () {
+                    var elements = _this.dom.querySelectorAll("[ref]");
+                    elements.forEach(function (element) {
+                        var refName = element.getAttribute("ref");
+                        output[refs][refName] = element;
+                    });
                 });
-            });
+            }
+            var children = target.prototype.__children;
+            if (children) {
+                output[children] = this.children;
+            }
             return output;
         }
         target.prototype.view = function (args) {
@@ -5181,6 +5193,18 @@ function Inject(name) {
     };
 }
 exports.Inject = Inject;
+function Refs(target, method, descriptor) {
+    target.__refs = method;
+}
+exports.Refs = Refs;
+function Children(target, method, descriptor) {
+    target.__children = method;
+}
+exports.Children = Children;
+function Attributes(target, method, descriptor) {
+    target.__attributes = method;
+}
+exports.Attributes = Attributes;
 function getDescendantProp(obj, desc) {
     if (!desc)
         return obj;
@@ -5264,7 +5288,7 @@ exports.PyriteConnect = PyriteConnect;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const m = __webpack_require__(4);
+const m = __webpack_require__(5);
 const queryString = __webpack_require__(33);
 function makeRequest(host, methodConfig = {}, config = {}) {
     const url = methodConfig.url ? reemplaceParams(methodConfig.url, config) : "";
@@ -5745,7 +5769,7 @@ exports.EmitterPlugin = plugin_1.EmitterPlugin;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const io = __webpack_require__(39);
-const m = __webpack_require__(4);
+const m = __webpack_require__(5);
 class EmitterPlugin {
     load(params, previousController) {
         this.socket = io(params.url);
@@ -6528,7 +6552,7 @@ var debug = __webpack_require__(1)('engine.io-client:socket');
 var index = __webpack_require__(21);
 var parser = __webpack_require__(3);
 var parseuri = __webpack_require__(13);
-var parseqs = __webpack_require__(5);
+var parseqs = __webpack_require__(6);
 
 /**
  * Module exports.
@@ -7298,7 +7322,7 @@ try {
 var XMLHttpRequest = __webpack_require__(9);
 var Polling = __webpack_require__(19);
 var Emitter = __webpack_require__(2);
-var inherit = __webpack_require__(6);
+var inherit = __webpack_require__(7);
 var debug = __webpack_require__(1)('engine.io-client:polling-xhr');
 
 /**
@@ -8276,7 +8300,7 @@ module.exports = (function() {
  */
 
 var Polling = __webpack_require__(19);
-var inherit = __webpack_require__(6);
+var inherit = __webpack_require__(7);
 
 /**
  * Module exports.
@@ -8514,8 +8538,8 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 var Transport = __webpack_require__(10);
 var parser = __webpack_require__(3);
-var parseqs = __webpack_require__(5);
-var inherit = __webpack_require__(6);
+var parseqs = __webpack_require__(6);
+var inherit = __webpack_require__(7);
 var yeast = __webpack_require__(20);
 var debug = __webpack_require__(1)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
@@ -8950,15 +8974,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(7);
-const Input_1 = __webpack_require__(62);
-const chatStyles = {
-    overflowY: "auto",
-    height: "450px"
-};
-const marginTop = {
-    marginTop: "10px"
-};
+const pyrite_1 = __webpack_require__(4);
+const ChatTemplate_1 = __webpack_require__(62);
 let Chat = class Chat {
     constructor() {
         this.chats = [];
@@ -8993,28 +9010,15 @@ let Chat = class Chat {
     }
 };
 __decorate([
+    pyrite_1.Refs,
+    __metadata("design:type", Object)
+], Chat.prototype, "refs", void 0);
+__decorate([
     pyrite_1.Inject("connect.Chats"),
     __metadata("design:type", Object)
 ], Chat.prototype, "service", void 0);
 Chat = __decorate([
-    pyrite_1.Component(function () {
-        const chats = this.chats.map((chat, key) => {
-            ;
-            const isCurrentUser = this.message.nick === chat.nick;
-            const alert = isCurrentUser ? "alert-warning offset-2" : " alert-info";
-            return (pyrite_1.Render("div", { key: key, class: "col-10 alert " + alert },
-                pyrite_1.Render("strong", null, chat.nick),
-                pyrite_1.Render("div", null, chat.msg)));
-        });
-        return (pyrite_1.Render("div", { class: "container-fluid", style: marginTop },
-            pyrite_1.Render("div", { class: "row justify-content-center" },
-                pyrite_1.Render("div", { class: "col-10 border border-secondary", style: chatStyles, ref: "chatBox" }, chats)),
-            pyrite_1.Render("div", { class: "row justify-content-center", style: marginTop },
-                pyrite_1.Render(Input_1.Input, { message: this.message, field: "nick", title: "Nick", onenter: this.sendChat.bind(this) }),
-                pyrite_1.Render(Input_1.Input, { message: this.message, field: "msg", title: "Msg", onenter: this.sendChat.bind(this) })),
-            pyrite_1.Render("div", { class: "row justify-content-center" },
-                pyrite_1.Render("button", { class: "btn btn-outline-danger", onclick: this.sendChat.bind(this) }, "Send"))));
-    }),
+    pyrite_1.Component(ChatTemplate_1.ChatTemplate),
     __metadata("design:paramtypes", [])
 ], Chat);
 exports.Chat = Chat;
@@ -9026,30 +9030,94 @@ exports.Chat = Chat;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+const pyrite_1 = __webpack_require__(4);
+const Input_1 = __webpack_require__(63);
+const chatStyles = {
+    overflowY: "auto",
+    height: "450px"
+};
+const marginTop = {
+    marginTop: "10px"
+};
+function ChatTemplate() {
+    const chats = this.chats.map((chat, key) => {
+        ;
+        const isCurrentUser = this.message.nick === chat.nick;
+        const alert = isCurrentUser ? "alert-warning offset-2" : " alert-info";
+        return (pyrite_1.Render("div", { key: key, class: "col-10 alert " + alert },
+            pyrite_1.Render("strong", null, chat.nick),
+            pyrite_1.Render("div", null, chat.msg)));
+    });
+    return (pyrite_1.Render("div", { class: "container-fluid", style: marginTop },
+        pyrite_1.Render("div", { class: "row justify-content-center" },
+            pyrite_1.Render("div", { class: "col-10 border border-secondary", style: chatStyles, ref: "chatBox" }, chats)),
+        pyrite_1.Render("div", { class: "row justify-content-center", style: marginTop },
+            pyrite_1.Render(Input_1.Input, { message: this.message, field: "nick", title: "Nick", onenter: this.sendChat.bind(this) },
+                pyrite_1.Render("span", { class: "input-group-addon" }, "Nick")),
+            pyrite_1.Render(Input_1.Input, { message: this.message, field: "msg", title: "Msg", onenter: this.sendChat.bind(this) },
+                pyrite_1.Render("span", { class: "input-group-addon" }, "Msg"))),
+        pyrite_1.Render("div", { class: "row justify-content-center" },
+            pyrite_1.Render("button", { class: "btn btn-outline-danger", onclick: this.sendChat.bind(this) }, "Send"))));
+}
+exports.ChatTemplate = ChatTemplate;
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(7);
+const pyrite_1 = __webpack_require__(4);
+const InputTemplate_1 = __webpack_require__(64);
 let Input = class Input {
     onEnter(event) {
         if (event.keyCode === 13)
-            this.onenter();
+            this.attrs.onenter();
     }
 };
+__decorate([
+    pyrite_1.Attributes,
+    __metadata("design:type", Object)
+], Input.prototype, "attrs", void 0);
+__decorate([
+    pyrite_1.Children,
+    __metadata("design:type", Array)
+], Input.prototype, "children", void 0);
 Input = __decorate([
-    pyrite_1.Component(function () {
-        return (pyrite_1.Render("div", { class: "form-group col-5" },
-            pyrite_1.Render("div", { class: "input-group" },
-                pyrite_1.Render("span", { class: "input-group-addon" }, this.title),
-                pyrite_1.Render("input", { type: "text", class: "form-control", placeholder: this.title, value: this.message[this.field], onkeypress: this.onEnter.bind(this), oninput: (event) => this.message[this.field] = event.target.value }))));
-    })
+    pyrite_1.Component(InputTemplate_1.InputTemplate)
 ], Input);
 exports.Input = Input;
 
 
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const pyrite_1 = __webpack_require__(4);
+function InputTemplate() {
+    return (pyrite_1.Render("div", { class: "form-group col-5" },
+        pyrite_1.Render("div", { class: "input-group" },
+            this.children,
+            pyrite_1.Render("input", { type: "text", class: "form-control", placeholder: this.attrs.title, value: this.attrs.message[this.attrs.field], onkeypress: this.onEnter.bind(this), oninput: (event) => this.attrs.message[this.attrs.field] = event.target.value }))));
+}
+exports.InputTemplate = InputTemplate;
+
+
 /***/ })
 /******/ ]);
+//# sourceMappingURL=app.bundle.js.map

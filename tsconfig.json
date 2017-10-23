@@ -6,10 +6,6 @@
 		"strict": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"lib": [
-			"es2015",
-			"dom"
-		],
 		"outDir": "./lib",
 		"rootDir": ".",
 		"jsx": "react",

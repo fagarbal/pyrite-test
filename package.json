@@ -16,7 +16,7 @@
 	"author": "Fabio Garcia",
 	"license": "ISC",
 	"dependencies": {
-		"pyrite": "^2.1.0",
+		"pyrite": "^2.4.0",
 		"pyrite-connect": "^0.2.0",
 		"pyrite-connect-emitter": "^0.1.0",
 		"pyrite-server": "^0.4.7",
