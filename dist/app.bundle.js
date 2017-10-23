@@ -1066,77 +1066,6 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-/**
- * Compiles a querystring
- * Returns string representation of the object
- *
- * @param {Object}
- * @api private
- */
-
-exports.encode = function (obj) {
-  var str = '';
-
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      if (str.length) str += '&';
-      str += encodeURIComponent(i) + '=' + encodeURIComponent(obj[i]);
-    }
-  }
-
-  return str;
-};
-
-/**
- * Parses a simple querystring into an object
- *
- * @param {String} qs
- * @api private
- */
-
-exports.decode = function(qs){
-  var qry = {};
-  var pairs = qs.split('&');
-  for (var i = 0, l = pairs.length; i < l; i++) {
-    var pair = pairs[i].split('=');
-    qry[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-  }
-  return qry;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-
-module.exports = function(a, b){
-  var fn = function(){};
-  fn.prototype = b.prototype;
-  a.prototype = new fn;
-  a.prototype.constructor = a;
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var pyrite_1 = __webpack_require__(11);
-exports.Pyrite = pyrite_1.Pyrite;
-exports.core = pyrite_1.core;
-var decorators_1 = __webpack_require__(29);
-exports.Component = decorators_1.Component;
-exports.Render = decorators_1.Render;
-exports.Inject = decorators_1.Inject;
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate, global) {;(function() {
@@ -2385,6 +2314,77 @@ else window.m = m
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26).setImmediate, __webpack_require__(0)))
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+/**
+ * Compiles a querystring
+ * Returns string representation of the object
+ *
+ * @param {Object}
+ * @api private
+ */
+
+exports.encode = function (obj) {
+  var str = '';
+
+  for (var i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      if (str.length) str += '&';
+      str += encodeURIComponent(i) + '=' + encodeURIComponent(obj[i]);
+    }
+  }
+
+  return str;
+};
+
+/**
+ * Parses a simple querystring into an object
+ *
+ * @param {String} qs
+ * @api private
+ */
+
+exports.decode = function(qs){
+  var qry = {};
+  var pairs = qs.split('&');
+  for (var i = 0, l = pairs.length; i < l; i++) {
+    var pair = pairs[i].split('=');
+    qry[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+  }
+  return qry;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+
+module.exports = function(a, b){
+  var fn = function(){};
+  fn.prototype = b.prototype;
+  a.prototype = new fn;
+  a.prototype.constructor = a;
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var pyrite_1 = __webpack_require__(11);
+exports.Pyrite = pyrite_1.Pyrite;
+exports.core = pyrite_1.core;
+var decorators_1 = __webpack_require__(29);
+exports.Component = decorators_1.Component;
+exports.Render = decorators_1.Render;
+exports.Inject = decorators_1.Inject;
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3004,7 +3004,7 @@ Transport.prototype.onClose = function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var m = __webpack_require__(7);
+var m = __webpack_require__(4);
 __webpack_require__(28);
 exports.Injections = {};
 exports.core = m;
@@ -4019,9 +4019,9 @@ function polling (opts) {
  */
 
 var Transport = __webpack_require__(10);
-var parseqs = __webpack_require__(4);
+var parseqs = __webpack_require__(5);
 var parser = __webpack_require__(3);
-var inherit = __webpack_require__(5);
+var inherit = __webpack_require__(6);
 var yeast = __webpack_require__(20);
 var debug = __webpack_require__(1)('engine.io-client:polling');
 
@@ -4366,7 +4366,7 @@ var toArray = __webpack_require__(58);
 var on = __webpack_require__(23);
 var bind = __webpack_require__(24);
 var debug = __webpack_require__(1)('socket.io-client:socket');
-var parseqs = __webpack_require__(4);
+var parseqs = __webpack_require__(5);
 
 /**
  * Module exports.
@@ -4841,7 +4841,7 @@ module.exports = function(obj, fn){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(6);
+const pyrite_1 = __webpack_require__(7);
 const pyrite_connect_1 = __webpack_require__(30);
 const pyrite_connect_emitter_1 = __webpack_require__(37);
 const router_1 = __webpack_require__(60);
@@ -5127,7 +5127,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var m = __webpack_require__(7);
+var m = __webpack_require__(4);
 var pyrite_1 = __webpack_require__(11);
 function Render(selector, attributes) {
     var children = [];
@@ -5264,7 +5264,7 @@ exports.PyriteConnect = PyriteConnect;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const m = __webpack_require__(7);
+const m = __webpack_require__(4);
 const queryString = __webpack_require__(33);
 function makeRequest(host, methodConfig = {}, config = {}) {
     const url = methodConfig.url ? reemplaceParams(methodConfig.url, config) : "";
@@ -5745,6 +5745,7 @@ exports.EmitterPlugin = plugin_1.EmitterPlugin;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const io = __webpack_require__(39);
+const m = __webpack_require__(4);
 class EmitterPlugin {
     load(params, previousController) {
         this.socket = io(params.url);
@@ -5784,7 +5785,10 @@ class EmitterPlugin {
         const eventName = controllerName + ".on." + methodName;
         let callback = () => { };
         const listener = (response) => {
-            callback(response.data, response.id);
+            const redraw = { background: false };
+            callback(response.data, response.id, redraw);
+            if (!redraw.background)
+                m.redraw();
         };
         controller.on[methodName] = (emitCallback) => {
             callback = emitCallback;
@@ -6524,7 +6528,7 @@ var debug = __webpack_require__(1)('engine.io-client:socket');
 var index = __webpack_require__(21);
 var parser = __webpack_require__(3);
 var parseuri = __webpack_require__(13);
-var parseqs = __webpack_require__(4);
+var parseqs = __webpack_require__(5);
 
 /**
  * Module exports.
@@ -7294,7 +7298,7 @@ try {
 var XMLHttpRequest = __webpack_require__(9);
 var Polling = __webpack_require__(19);
 var Emitter = __webpack_require__(2);
-var inherit = __webpack_require__(5);
+var inherit = __webpack_require__(6);
 var debug = __webpack_require__(1)('engine.io-client:polling-xhr');
 
 /**
@@ -8272,7 +8276,7 @@ module.exports = (function() {
  */
 
 var Polling = __webpack_require__(19);
-var inherit = __webpack_require__(5);
+var inherit = __webpack_require__(6);
 
 /**
  * Module exports.
@@ -8510,8 +8514,8 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 var Transport = __webpack_require__(10);
 var parser = __webpack_require__(3);
-var parseqs = __webpack_require__(4);
-var inherit = __webpack_require__(5);
+var parseqs = __webpack_require__(5);
+var inherit = __webpack_require__(6);
 var yeast = __webpack_require__(20);
 var debug = __webpack_require__(1)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
@@ -8946,7 +8950,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(6);
+const pyrite_1 = __webpack_require__(7);
 const Input_1 = __webpack_require__(62);
 const chatStyles = {
     overflowY: "auto",
@@ -8972,17 +8976,19 @@ let Chat = class Chat {
             this.addChat(chat);
         });
     }
-    sendChat(event) {
-        const body = {
-            msg: this.message.msg,
-            nick: this.message.nick
-        };
-        this.service.sendChat({ body });
+    sendChat() {
+        this.service.sendChat({
+            body: {
+                msg: this.message.msg,
+                nick: this.message.nick
+            }
+        });
     }
     addChat(chat) {
         this.chats.push(chat);
         this.message.msg = "";
-        pyrite_1.core.redraw();
+    }
+    onupdate() {
         this.refs.chatBox.scrollTop = this.refs.chatBox.scrollHeight;
     }
 };
@@ -9027,7 +9033,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pyrite_1 = __webpack_require__(6);
+const pyrite_1 = __webpack_require__(7);
 let Input = class Input {
     onEnter(event) {
         if (event.keyCode === 13)

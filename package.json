@@ -18,10 +18,10 @@
 	"dependencies": {
 		"pyrite": "^2.1.0",
 		"pyrite-connect": "^0.2.0",
-		"pyrite-connect-emitter": "0.0.3",
+		"pyrite-connect-emitter": "^0.1.0",
 		"pyrite-server": "^0.4.7",
-		"pyrite-server-emitter": "0.0.7",
-		"pyrite-server-validations": "0.0.5"
+		"pyrite-server-emitter": "^0.0.7",
+		"pyrite-server-validations": "^0.0.5"
 	},
 	"devDependencies": {
 		"source-map-loader": "^0.2.1",

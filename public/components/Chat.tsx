@@ -60,20 +60,21 @@ export class Chat {
 		});
 	}
 
-	sendChat(event: any): void {		
-		const body = {
-			msg: this.message.msg,
-			nick: this.message.nick
-		};
-
-		this.service.sendChat({ body });
+	sendChat() {		
+		this.service.sendChat({
+			body: {
+				msg: this.message.msg,
+				nick: this.message.nick
+			}
+		});
 	}
 
-	addChat(chat: any): void {
+	addChat(chat: any) {
 		this.chats.push(chat);
 		this.message.msg = "";
-		core.redraw();
+	}
 
-		this.refs.chatBox.scrollTop = this.refs.chatBox.scrollHeight;
+	onupdate() {
+		this.refs.chatBox.scrollTop = this.refs.chatBox.scrollHeight
 	}
 }
