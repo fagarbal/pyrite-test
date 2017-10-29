@@ -1,32 +1,32 @@
 {
-	"name": "pyrite-test",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build:server": "tsc",
-		"build:server:watch": "tsc -w",
-		"start:server": "nodemon lib/server",
-		"build:public:watch": "webpack --watch",
-		"start:public": "http-server dist",
-		"watch": "concurrently --kill-others \"npm run build:server:watch\" \"npm run start:server\" \"npm run build:public:watch\" \"npm run start:public\"",
-		"watch:server": "concurrently --kill-others \"npm run build:server:watch\" \"npm run start:server\""
-	},
-	"author": "Fabio Garcia",
-	"license": "ISC",
-	"dependencies": {
-		"pyrite": "^2.4.0",
-		"pyrite-connect": "^0.2.0",
-		"pyrite-connect-emitter": "^0.1.0",
-		"pyrite-server": "^0.4.7",
-		"pyrite-server-emitter": "^0.0.7",
-		"pyrite-server-validations": "^0.0.5"
-	},
-	"devDependencies": {
-		"source-map-loader": "^0.2.1",
-		"ts-loader": "^3.0.5",
-		"typescript": "^2.5.3",
-		"webpack": "^3.3.0"
-	}
+  "name": "pyrite-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:server": "tsc",
+    "build:server:watch": "tsc -w",
+    "start:server": "nodemon lib/server",
+    "build:public:watch": "webpack --watch",
+    "start:public": "http-server dist",
+    "watch": "concurrently --kill-others \"npm run build:server:watch\" \"npm run start:server\" \"npm run build:public:watch\" \"npm run start:public\"",
+    "watch:server": "concurrently --kill-others \"npm run build:server:watch\" \"npm run start:server\""
+  },
+  "author": "Fabio Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "pyrite": "^2.6.1",
+    "pyrite-connect": "^0.3.0",
+    "pyrite-connect-emitter": "^0.1.0",
+    "pyrite-server": "^0.5.1",
+    "pyrite-server-emitter": "0.0.7",
+    "pyrite-server-validations": "0.0.5"
+  },
+  "devDependencies": {
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^3.0.5",
+    "typescript": "^2.5.3",
+    "webpack": "^3.3.0"
+  }
 }

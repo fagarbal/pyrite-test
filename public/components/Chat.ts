@@ -1,4 +1,4 @@
-import { Component, Inject, Refs } from "pyrite";
+import { Component, Inject, Refs, core } from "pyrite";
 import { ChatTemplate } from "./ChatTemplate";
 import { Input } from "./Input";
 
@@ -22,6 +22,8 @@ export class Chat {
 
 	async getChats() {
 		this.chats = await this.service.getChats();
+		console.log(this.chats);
+		core.redraw();
 	}
 
 	onSendChat() {
@@ -31,12 +33,7 @@ export class Chat {
 	}
 
 	sendChat() {		
-		this.service.sendChat({
-			body: {
-				msg: this.message.msg,
-				nick: this.message.nick
-			}
-		});
+		this.service.sendChat(this.message);
 	}
 
 	addChat(chat: any) {
@@ -44,7 +41,7 @@ export class Chat {
 		this.message.msg = "";
 	}
 
-	onupdate() {
+	$onUpdate() {
 		this.refs.chatBox.scrollTop = this.refs.chatBox.scrollHeight
 	}
 }
