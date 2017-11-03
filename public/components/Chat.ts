@@ -21,6 +21,7 @@ export class Chat {
 	}
 
 	async getChats() {
+		localStorage.setItem("pepe", "example");
 		this.chats = await this.service.getChats();
 		console.log(this.chats);
 		core.redraw();

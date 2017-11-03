@@ -14,6 +14,6 @@ export class Input {
 	@Children children: Array<HTMLElement>;
 
 	onEnter(event: any) {
-		if (event.keyCode === 13) this.attrs.onenter();
+		if (event.keyCode === 13) return this.attrs.onenter();
 	} 
 }

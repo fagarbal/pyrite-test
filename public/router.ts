@@ -1,17 +1,12 @@
-import { RootPage } from "./components/RootPage";
-import { OtherPage } from "./components/OtherPage";
-import { ChatPage } from "./components/ChatPage";
-import { Chat } from "./components/Chat";
+import { LoginPage, MainPage, RegisterPage } from "./pages";
 
 export const router = [{
-	path: "/",
-	component: RootPage,
-	routes: [{
-		component: OtherPage,
-		path: "/:id",
-		routes: [{
-			component: Chat,
-			path: "/chat"
-		}]
-	}]
+	path: "/login",
+	component: LoginPage
+},{
+	path: "/register",
+	component: RegisterPage
+},{
+	path: "/main",
+	component: MainPage
 }];

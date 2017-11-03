@@ -4,6 +4,9 @@ import { EmitterPlugin } from "pyrite-connect-emitter";
 
 import { router } from "./router";
 
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 const connect = new PyriteConnect({
 	url: "http://localhost:8000",
 	plugins: [
@@ -15,5 +18,6 @@ const pyrite = new Pyrite({
 	inject: {
 		connect: connect.getRoutes()
 	},
-	routes: router
+	routes: router,
+	rootPath: "/login",
 });

@@ -1,7 +1,6 @@
 import { Render } from "pyrite";
 import { Input } from "./Input";
 import { Chat } from "./Chat";
-
 const chatStyles = {
 	overflowY: "auto",
 	height: "450px"
@@ -18,14 +17,14 @@ export function ChatTemplate(this: Chat) {
 
 		return (
 			<div key={key} class={"col-10 alert " + alert}>
-				<strong>{chat.nick}</strong>
+				<strong class="fabio">{chat.nick}</strong>
 				<div>{chat.msg}</div>
 			</div>
 		);
 	});
 
 	return (
-		<div class="container-fluid" style={marginTop}>
+		<div class="chat-component container-fluid" style={marginTop}>
 			<div class="row justify-content-center">
 				<div class="col-10 border border-secondary" style={chatStyles} ref="chatBox">{chats}</div>
 			</div>
