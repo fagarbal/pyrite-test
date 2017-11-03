@@ -39,11 +39,10 @@ export function LoginPageTemplate (this: LoginPageComponent) {
 	return (
 		<div style={{ marginTop: "100px" }}>
 	    	<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<div class="panel panel-login">
-						<div class="panel-heading">
-							<h1 class="text-center">Login</h1>
-							<hr/>
+				<div class="col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+					<div class="panel panel-primary">
+						<div class="panel-heading text-center">
+							<span><strong>Login</strong></span>
 						</div>
 						<div class="panel-body">
 							<div class="row">

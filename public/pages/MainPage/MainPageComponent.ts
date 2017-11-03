@@ -14,6 +14,8 @@ export class MainPageComponent {
 	@Inject("connect.Posts") postsService: PostsService;
 
 	posts: Array<any> = [];
+	comments: any = {};
+	showComments: any = {};
 
 	$onCreate() {
 		this.postsService.getPosts()
@@ -26,7 +28,7 @@ export class MainPageComponent {
 		});
 
 		this.postsService.on.createComment((commentResponse: any) => {
-			const currentPost = this.posts.find((post) => post.id = commentResponse.id);
+			const currentPost = this.posts.find((post) => post.id == commentResponse.id);
 			currentPost.comments.push(commentResponse.comment);
 		});
 	}
@@ -37,8 +39,8 @@ export class MainPageComponent {
 		this.postsService.createPost({ title });
 	}
 
-	createComment(id: number, text: string) {
-		this.postsService.createComment(id, { text });
+	createComment(id: number, message: string) {
+		this.postsService.createComment(id, { message });
 	}
 
 }

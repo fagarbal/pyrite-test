@@ -24,7 +24,7 @@ export class LoginPageComponent {
 
 		this.authService.login(username, password)
 		.then((loginResponse: any) => {
-			localStorage.setItem("token", loginResponse.token);
+			localStorage.setItem("token", "Bearer " + loginResponse.token);
 			core.route.set("/main");
 		})
 		.catch(this.errorLogin.bind(this));

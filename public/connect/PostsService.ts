@@ -7,7 +7,7 @@ export type Post = {
 };
 
 export type Comment = {
-	text: string;
+	message: string;
 	created_on?: Date;
 	created_by?: string;
 };

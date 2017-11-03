@@ -17,9 +17,10 @@
   "license": "ISC",
   "dependencies": {
     "@types/jwt-simple": "^0.5.33",
+    "jwt-simple": "^0.5.1",
     "moment": "^2.19.1",
     "pyrite": "^2.6.1",
-    "pyrite-connect": "^0.3.0",
+    "pyrite-connect": "^0.4.1",
     "pyrite-connect-emitter": "^0.1.0",
     "pyrite-server": "^0.6.1",
     "pyrite-server-emitter": "0.0.7",

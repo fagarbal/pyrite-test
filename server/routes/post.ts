@@ -18,14 +18,18 @@ const validateComment = {
 let ids = 0;
 
 const posts = [{
-	id: ids++,
+	id: ++ids,
 	title: "Title post",
 	created_by: "test",
-	created_on: new Date(),
+	created_on: (new Date()).toDateString(),
 	comments: [{
 		message: "Comment message",
 		created_by: "test",
-		created_on: new Date()
+		created_on: (new Date()).toDateString()
+	}, {
+		message: "Comment message",
+		created_by: "test",
+		created_on: (new Date()).toDateString()
 	}]
 }];
 
@@ -43,10 +47,10 @@ export class Posts {
 	@Emits
 	@Validation(validatePost)
 	createPost(@Body post: any, @Emit emit: Function, @Request("user") loggedUser: string) {
-		post.id = ids++;
+		post.id = ++ids;
 		post.comments = [];
 		post.created_by = loggedUser;
-		post.created_on = new Date();
+		post.created_on = (new Date()).toDateString();
 
 		const index = posts.push(post);
 
@@ -61,16 +65,16 @@ export class Posts {
 	@Emits
 	@Validation(validateComment)
 	createComment(@Params("id") id: number, @Body comment: any, @Emit emit: Function, @Request("user") loggedUser: string) {
-		const post: any = posts.find((post: any) => post.id === id);
+		const post: any = posts.find((post: any) => post.id == id);
 
 		if (!post) throw Exception(400, "Post id invalid");
 
 		comment.created_by = loggedUser;
-		comment.created_on = new Date();
+		comment.created_on = (new Date()).toDateString();
 
 		const index = post.comments.push(comment);
 
-		emit(comment);
+		emit({ id, comment });
 
 		return {
 			success: index
