@@ -33,14 +33,27 @@ export class MainPageComponent {
 		});
 	}
 
+	$onRemove() {
+		this.postsService.off.createPost();
+		this.postsService.off.createComment();
+	}
+
 	createPost() {
 		const title = this.refs.title.value;
 
-		this.postsService.createPost({ title });
+		this.postsService.createPost({ title })
+		.then(() => {
+			this.refs.title.value = "";
+		});
 	}
 
 	createComment(id: number, message: string) {
-		this.postsService.createComment(id, { message });
+		return this.postsService.createComment(id, { message });
+	}
+
+	logout() {
+		localStorage.removeItem("token");
+		core.route.set("/login");
 	}
 
 }

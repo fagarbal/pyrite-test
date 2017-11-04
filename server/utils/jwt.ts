@@ -12,18 +12,10 @@ export function createToken(user: any) {
 }
 
 export function checkUser (req: any, res: any, next?: Function) {
-	if (!req.headers.authorization) {
-		return res
-		.status(403)
-		.send({
-			error: "Invalid Token"
-		});
-	}
-
-	const token = req.headers.authorization.split(" ")[1];
 	let payload;
 
 	try {
+		const token = req.headers.authorization.split(" ")[1];
 		payload = jwt.decode(token, "EXAMPLE");
 	} catch (error) {
 		return res

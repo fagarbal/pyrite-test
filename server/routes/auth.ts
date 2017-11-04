@@ -2,6 +2,7 @@ import { Route, Get, Post, Body, Query, Storage, Params, Exception } from "pyrit
 import { Emits, Emit } from "pyrite-server-emitter";
 import { Validation } from "pyrite-server-validations";
 import { createToken } from "../utils/jwt";
+import { users } from "../mocks/mocks";
 
 const validateAuth = {
 	username: {
@@ -11,11 +12,6 @@ const validateAuth = {
 		presence: true
 	}
 };
-
-const users = [{
-	username: "test",
-	password: "test"
-}];
 
 @Route
 export class Auth {
@@ -35,9 +31,9 @@ export class Auth {
 	@Post
 	@Validation(validateAuth)
 	register(@Body("username") username: string, @Body("password") password: string) {
-		const userExists = users.find((user) => user.username === user.username);
+		const userExists = users.find((user) => user.username === username);
 
-		if (!userExists) throw Exception(400, "Username already exists");
+		if (userExists) throw Exception(400, "Username already exists");
 
 		const index = users.push({
 			username, password

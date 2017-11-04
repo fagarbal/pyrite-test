@@ -8,7 +8,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const connect = new PyriteConnect({
-	url: "http://192.168.4.129:8000",
+	url: "http://localhost:8000",
 	plugins: [
 		new EmitterPlugin()
 	]

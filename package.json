@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node lib/server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:server": "tsc",
     "build:server:watch": "tsc -w",
@@ -17,6 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/jwt-simple": "^0.5.33",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
     "jwt-simple": "^0.5.1",
     "moment": "^2.19.1",
     "pyrite": "^2.6.1",
