@@ -19,6 +19,10 @@ export class RegisterPageComponent {
 	errors: Array<string> = [];
 	success: boolean = false;
 
+	onInit() {
+		if (localStorage.getItem("token")) core.route.set("/main");
+	}
+
 	register() {
 		this.errors = [];
 

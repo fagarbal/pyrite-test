@@ -11,29 +11,33 @@ export function createToken(user: any) {
 	return jwt.encode(payload, 'EXAMPLE');
 }
 
-export function checkUser (req: any, res: any, next?: Function) {
-	let payload;
+export function checkUser(users: Array<any>) {
+	return function (req: any, res: any, next?: Function) {
+		let payload: any;
 
-	try {
-		const token = req.headers.authorization.split(" ")[1];
-		payload = jwt.decode(token, "EXAMPLE");
-	} catch (error) {
-		return res
-		.status(401)
-		.send({
-			error: "Invalid Token"
-		});
-	}
+		try {
+			const token = req.headers.authorization.split(" ")[1];
+			payload = jwt.decode(token, "EXAMPLE");
 
-	if (payload.exp <= moment().unix()) {
-		return res
-		.status(401)
-		.send({
-			error: "Expired Token"
-		});
-	}
+			if (!users.find((user: any) => user.username === payload.username)) throw "no_user";
+		} catch (error) {
+			return res
+			.status(401)
+			.send({
+				error: "Invalid Token"
+			});
+		}
 
-	req.user = payload.username;
+		if (payload.exp <= moment().unix()) {
+			return res
+			.status(401)
+			.send({
+				error: "Expired Token"
+			});
+		}
 
-	if (next) next();
-};
+		req.user = payload.username;
+
+		if (next) next();
+	};
+}

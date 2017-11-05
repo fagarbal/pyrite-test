@@ -19,5 +19,5 @@ const pyrite = new Pyrite({
 		connect: connect.getRoutes()
 	},
 	routes: router,
-	rootPath: "/login",
+	rootPath: "/login"
 });

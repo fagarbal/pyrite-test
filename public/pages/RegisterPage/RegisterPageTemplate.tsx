@@ -41,18 +41,16 @@ export function RegisterPageTemplate (this: RegisterPageComponent) {
 	);
 
 	return (
-		<div style={{ marginTop: "100px" }}>
-	    	<div class="row">
-				<div class="col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-					<div class="panel panel-primary">
-						<div class="panel-heading text-center">
-							<span><strong>Register</strong></span>
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-12">
-									{registerForm}
-								</div>
+		<div class="col-xs-12" style={{ marginTop: "20px" }}>
+			<div class="col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center">
+						<span><strong>Register</strong></span>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								{registerForm}
 							</div>
 						</div>
 					</div>

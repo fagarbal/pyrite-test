@@ -17,19 +17,25 @@ export class MainPageComponent {
 	comments: any = {};
 	showComments: any = {};
 
-	$onCreate() {
+	$onInit() {
+		if (!localStorage.getItem("token")) return core.route.set("/login");
+		
 		this.postsService.getPosts()
 		.then((posts: any) => {
 			this.posts = posts;
-		});
+			
+			this.postsService.on.createPost((post: any) => {
+				this.posts.unshift(post);
+			});
 
-		this.postsService.on.createPost((post: any) => {
-			this.posts.push(post);
-		});
-
-		this.postsService.on.createComment((commentResponse: any) => {
-			const currentPost = this.posts.find((post) => post.id == commentResponse.id);
-			currentPost.comments.push(commentResponse.comment);
+			this.postsService.on.createComment((commentResponse: any) => {
+				const currentPost = this.posts.find((post) => post.id == commentResponse.id);
+				currentPost.comments.push(commentResponse.comment);
+			});
+		})
+		.catch(() => {
+			localStorage.removeItem("token");
+			core.route.set("/login");
 		});
 	}
 
@@ -49,6 +55,11 @@ export class MainPageComponent {
 
 	createComment(id: number, message: string) {
 		return this.postsService.createComment(id, { message });
+	}
+
+	goTo(id: number) {
+		const post = document.getElementById("#post-" + id);
+		if (post) window.scrollTo(0, post.offsetTop);
 	}
 
 	logout() {

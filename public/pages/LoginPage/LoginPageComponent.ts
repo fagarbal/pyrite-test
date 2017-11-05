@@ -16,6 +16,10 @@ export class LoginPageComponent {
 
 	errors: Array<string> = [];
 
+	$onInit() {
+		if (localStorage.getItem("token")) core.route.set("/main");
+	}
+
 	login() {
 		this.errors = [];
 
