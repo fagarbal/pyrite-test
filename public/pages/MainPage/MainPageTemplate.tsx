@@ -1,4 +1,4 @@
-import { Render, core } from "pyrite";
+import { m } from "pyrite";
 import { MainPageComponent } from "./MainPageComponent";
 import { Post } from "../../components";
 
@@ -15,7 +15,7 @@ export function MainPageTemplate (this: MainPageComponent) {
 					</div>
 					<div class="panel-body">
 						<div class="form-group">
-							<textarea rows="3" ref="title" class="form-control" placeholder="Post title..." style="resize: none"/>
+							<textarea rows="3" id="title" class="form-control" placeholder="Post title..." style="resize: none"/>
 						</div>
 						<div class="form-group">
 							<div class="row">

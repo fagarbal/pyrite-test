@@ -1,35 +1,27 @@
-import { Component, Refs, Inject, core } from "pyrite";
+import { Component, Template, m } from "pyrite";
 import { LoginPageTemplate } from "./LoginPageTemplate";
+import { services, AuthService } from "../../connect";
 
-import { AuthService } from "../../connect";
-
-interface LoginPageRefs {
-	username: HTMLInputElement;
-	password: HTMLInputElement;
-}
-
-@Component(LoginPageTemplate)
-export class LoginPageComponent {
-
-	@Refs refs: LoginPageRefs;
-	@Inject("connect.Auth") authService: AuthService;
+@Template(LoginPageTemplate)
+export class LoginPageComponent extends Component<any>{
+	authService: AuthService = services.Auth;
 
 	errors: Array<string> = [];
 
 	$onInit() {
-		if (localStorage.getItem("token")) core.route.set("/main");
+		if (localStorage.getItem("token")) m.route.set("/main");
 	}
 
 	login() {
 		this.errors = [];
 
-		const username = this.refs.username.value;
-		const password = this.refs.password.value;
+		const username = document.getElementById("username") as HTMLInputElement;
+		const password = document.getElementById("username") as HTMLInputElement;
 
-		this.authService.login(username, password)
+		this.authService.login(username.value, password.value)
 		.then((loginResponse: any) => {
 			localStorage.setItem("token", "Bearer " + loginResponse.token);
-			core.route.set("/main");
+			m.route.set("/main");
 		})
 		.catch(this.errorLogin.bind(this));
 	}
@@ -44,7 +36,7 @@ export class LoginPageComponent {
 			this.errors = [loginError.message];
 		}
 
-		core.redraw();
+		m.redraw();
 	}
 
 }

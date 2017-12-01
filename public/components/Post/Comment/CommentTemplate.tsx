@@ -1,4 +1,4 @@
-import { Render } from "pyrite";
+import { m } from "pyrite";
 import { CommentComponent } from "./CommentComponent";
 
 export function CommentTemplate (this: CommentComponent) {

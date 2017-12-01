@@ -5,7 +5,7 @@ import { ValidationPlugin } from "pyrite-server-validations";
 const server = new PyriteServer({
   port: 8000,
   routes: "/routes",
-  cors: ["http://localhost:8080"],
+  cors: ["http://localhost:8080","http://4cd8dc37.ngrok.io"],
   plugins: [new EmitterPlugin(), new ValidationPlugin()]
 });
 

@@ -1,46 +1,37 @@
-import { Component, Refs, Inject, core } from "pyrite";
+import { Component, Template, m } from "pyrite";
 import { RegisterPageTemplate } from "./RegisterPageTemplate";
 
-import { AuthService } from "../../connect";
+import { services, AuthService } from "../../connect";
 
-interface RegisterPageRefs {
-	username: HTMLInputElement;
-	password: HTMLInputElement;
-	repeat_password: HTMLInputElement;
-}
-
-@Component(RegisterPageTemplate)
-export class RegisterPageComponent {
-
-	@Refs refs: RegisterPageRefs;
-
-	@Inject("connect.Auth") authService: AuthService;
+@Template(RegisterPageTemplate)
+export class RegisterPageComponent extends Component<any> {
+	authService: AuthService = services.Auth;
 
 	errors: Array<string> = [];
 	success: boolean = false;
 
 	onInit() {
-		if (localStorage.getItem("token")) core.route.set("/main");
+		if (localStorage.getItem("token")) m.route.set("/main");
 	}
 
 	register() {
 		this.errors = [];
 
-		const username = this.refs.username.value;
-		const password = this.refs.password.value;
-		const repeat_password = this.refs.repeat_password.value;
+		const username = document.getElementById("username") as HTMLInputElement;
+		const password = document.getElementById("password") as HTMLInputElement;
+		const repeat_password = document.getElementById("repeat_password") as HTMLInputElement;
 
-		if (password !== repeat_password) {
+		if (password.value !== repeat_password.value) {
 			return this.errors = ["The passwords are not the same"];
 		}
 
-		this.authService.register(username, password)
+		this.authService.register(username.value, password.value)
 		.then((registerResponse: any) => {
 			this.success = true;
 
-			setTimeout(() => core.route.set("/login"), 2000);
+			setTimeout(() => m.route.set("/login"), 2000);
 
-			core.redraw();
+			m.redraw();
 		})
 		.catch(this.errorLogin.bind(this));
 	}
@@ -55,10 +46,10 @@ export class RegisterPageComponent {
 			this.errors = [registerError.message];
 		}
 
-		core.redraw();
+		m.redraw();
 	}
 
 	goBack() {
-		core.route.set("/login");
+		m.route.set("/login");
 	}
 }

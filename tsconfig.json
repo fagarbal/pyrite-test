@@ -9,7 +9,7 @@
 		"outDir": "./lib",
 		"rootDir": ".",
 		"jsx": "react",
-		"jsxFactory": "Render",
+		"jsxFactory": "m",
 	},
 	"include": [
 		"./server",

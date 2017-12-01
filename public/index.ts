@@ -1,8 +1,10 @@
-import { Pyrite } from "pyrite";
+import { router, m } from "pyrite";
 import { PyriteConnect } from "pyrite-connect";
 import { EmitterPlugin } from "pyrite-connect-emitter";
 
-import { router } from "./router";
+import { configRoutes } from "./router";
+
+import { services } from "./connect";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,10 +16,9 @@ const connect = new PyriteConnect({
 	]
 });
 
-const pyrite = new Pyrite({
-	inject: {
-		connect: connect.getRoutes()
-	},
-	routes: router,
-	rootPath: "/login"
+connect.getRoutes()
+.then((routes) => {
+	Object.assign(services, routes);
+
+	m.route(document.body, "/login", router.build(configRoutes))
 });

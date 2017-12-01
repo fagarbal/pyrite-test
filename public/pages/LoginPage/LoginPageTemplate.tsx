@@ -1,4 +1,4 @@
-import { Render } from "pyrite";
+import { m } from "pyrite";
 import { LoginPageComponent } from "./LoginPageComponent";
 
 export function LoginPageTemplate (this: LoginPageComponent) {
@@ -6,11 +6,11 @@ export function LoginPageTemplate (this: LoginPageComponent) {
 		<div>
 			<div class="form-group">
 				<span>User</span>
-				<input type="text" ref="username" class="form-control" placeholder="Username..." />
+				<input type="text" id="username" class="form-control" placeholder="Username..." />
 			</div>
 			<div class="form-group">
 				<span>Password</span>
-				<input type="password" ref="password" class="form-control" placeholder="Password..." />
+				<input type="password" id="password" class="form-control" placeholder="Password..." />
 			</div>
 			{this.errors.map((error) => ( 
 				<div class="alert alert-danger">

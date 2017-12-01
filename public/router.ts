@@ -1,6 +1,6 @@
 import { LoginPage, MainPage, RegisterPage } from "./pages";
 
-export const router = [{
+export const configRoutes: any = [{
 	path: "/login",
 	component: LoginPage
 },{

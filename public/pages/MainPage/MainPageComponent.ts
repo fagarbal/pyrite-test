@@ -1,24 +1,19 @@
-import { Component, Refs, Inject, core } from "pyrite";
+import { Component, Template, m } from "pyrite";
 import { MainPageTemplate } from "./MainPageTemplate";
 
-import { PostsService } from "../../connect";
+import { services, PostsService } from "../../connect";
 
-interface MainPageRefs {
-	title: HTMLInputElement;
-}
+@Template(MainPageTemplate)
+export class MainPageComponent extends Component<any> {
 
-@Component(MainPageTemplate)
-export class MainPageComponent {
-
-	@Refs refs: MainPageRefs;
-	@Inject("connect.Posts") postsService: PostsService;
+	postsService: PostsService = services.Posts;
 
 	posts: Array<any> = [];
 	comments: any = {};
 	showComments: any = {};
 
 	$onInit() {
-		if (!localStorage.getItem("token")) return core.route.set("/login");
+		if (!localStorage.getItem("token")) return m.route.set("/login");
 		
 		this.postsService.getPosts()
 		.then((posts: any) => {
@@ -35,7 +30,7 @@ export class MainPageComponent {
 		})
 		.catch(() => {
 			localStorage.removeItem("token");
-			core.route.set("/login");
+			m.route.set("/login");
 		});
 	}
 
@@ -45,11 +40,11 @@ export class MainPageComponent {
 	}
 
 	createPost() {
-		const title = this.refs.title.value;
+		const title = document.getElementById("title") as HTMLInputElement;
 
-		this.postsService.createPost({ title })
+		this.postsService.createPost({ title: title.value })
 		.then(() => {
-			this.refs.title.value = "";
+			title.value = "";
 		});
 	}
 
@@ -64,7 +59,7 @@ export class MainPageComponent {
 
 	logout() {
 		localStorage.removeItem("token");
-		core.route.set("/login");
+		m.route.set("/login");
 	}
 
 }

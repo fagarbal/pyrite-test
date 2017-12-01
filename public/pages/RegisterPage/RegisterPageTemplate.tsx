@@ -1,4 +1,4 @@
-import { Render } from "pyrite";
+import { m } from "pyrite";
 import { RegisterPageComponent } from "./RegisterPageComponent";
 
 export function RegisterPageTemplate (this: RegisterPageComponent) {
@@ -6,15 +6,15 @@ export function RegisterPageTemplate (this: RegisterPageComponent) {
 		<div>
 			<div class="form-group">
 				<span>User</span>
-				<input type="text" ref="username" class="form-control" placeholder="Username..." disabled={this.success}/>
+				<input type="text" id="username" class="form-control" placeholder="Username..." disabled={this.success}/>
 			</div>
 			<div class="form-group">
 				<span>Password</span>
-				<input type="password" ref="password" class="form-control" placeholder="Password..." disabled={this.success}/>
+				<input type="password" id="password" class="form-control" placeholder="Password..." disabled={this.success}/>
 			</div>
 			<div class="form-group">
 				<span>Repeat password</span>
-				<input type="password" ref="repeat_password" class="form-control" placeholder="Repeat password..." disabled={this.success}/>
+				<input type="password" id="repeat_password" class="form-control" placeholder="Repeat password..." disabled={this.success}/>
 			</div>
 			{this.errors.map((error) => ( 
 				<div class="alert alert-danger">

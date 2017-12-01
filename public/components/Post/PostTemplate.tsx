@@ -1,4 +1,4 @@
-import { Render } from "pyrite";
+import { m } from "pyrite";
 import { PostComponent } from "./PostComponent";
 import { CommentComponent } from "./Comment/CommentComponent";
 
@@ -31,7 +31,7 @@ export function PostTemplate (this: PostComponent) {
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="form-group">
-				                <textarea rows="3" ref="comment" class="form-control" placeholder="New comment..." style="resize: none"/>
+				                <textarea rows="3" id="comment" class="form-control" placeholder="New comment..." style="resize: none"/>
 				            </div>
 				          	<button type="button" class="btn btn-primary pull-right" onclick={this.create.bind(this)}>Add <i class="glyphicon glyphicon-comment"/></button>
 						</div>

@@ -1,24 +1,27 @@
-import { Component, Refs, Attributes } from "pyrite";
+import { Component, Template } from "pyrite";
 import { PostTemplate } from "./PostTemplate";
 
-@Component(PostTemplate)
-export class PostComponent {
-	@Refs refs: any;
-	@Attributes attrs: any;
+interface PostComponentProps {
+	key: number;
+	post: any;
+	onCreateComment: Function;
+}
 
+@Template(PostTemplate)
+export class PostComponent extends Component<PostComponentProps>{
 	post: any;
 	showComments: boolean;
 
 	$onInit() {
-		this.post = this.attrs.post;
+		this.post = this.props.post;
 	}
 
 	create() {
-		const comment = this.refs.comment.value;
+		const comment = document.getElementById("comment") as HTMLInputElement;
 
-		this.attrs.onCreateComment(this.post.id, comment)
+		this.props.onCreateComment(this.post.id, comment.value)
 		.then(() => {
-			this.refs.comment.value = "";
+			comment.value = "";
 		});
 	}
 }
