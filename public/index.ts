@@ -20,5 +20,5 @@ connect.getRoutes()
 .then((routes) => {
 	Object.assign(services, routes);
 
-	m.route(document.body, "/login", router.build(configRoutes))
+	m.route(document.body, "/login", router.build(configRoutes));
 });

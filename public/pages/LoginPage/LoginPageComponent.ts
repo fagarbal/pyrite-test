@@ -9,7 +9,11 @@ export class LoginPageComponent extends Component<any>{
 	errors: Array<string> = [];
 
 	$onInit() {
-		if (localStorage.getItem("token")) m.route.set("/main");
+		if (localStorage.getItem("token")) {
+			this.preventDraw = true;
+
+			return m.route.set("/main");
+		}
 	}
 
 	login() {

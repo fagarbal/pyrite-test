@@ -10,8 +10,12 @@ export class RegisterPageComponent extends Component<any> {
 	errors: Array<string> = [];
 	success: boolean = false;
 
-	onInit() {
-		if (localStorage.getItem("token")) m.route.set("/main");
+	$onInit() {
+		if (localStorage.getItem("token")) {
+			this.preventDraw = true;
+
+			return m.route.set("/main");
+		}
 	}
 
 	register() {
@@ -29,7 +33,7 @@ export class RegisterPageComponent extends Component<any> {
 		.then((registerResponse: any) => {
 			this.success = true;
 
-			setTimeout(() => m.route.set("/login"), 2000);
+			setTimeout(() => m.route.set("/login"), 1000);
 
 			m.redraw();
 		})

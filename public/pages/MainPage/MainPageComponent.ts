@@ -3,29 +3,42 @@ import { MainPageTemplate } from "./MainPageTemplate";
 
 import { services, PostsService } from "../../connect";
 
+import { dispatch } from "../../flux";
+import { POSTS_TYPES } from "../../stores/posts";
+
 @Template(MainPageTemplate)
 export class MainPageComponent extends Component<any> {
 
 	postsService: PostsService = services.Posts;
 
-	posts: Array<any> = [];
 	comments: any = {};
 	showComments: any = {};
 
 	$onInit() {
-		if (!localStorage.getItem("token")) return m.route.set("/login");
+		if (!localStorage.getItem("token")) {
+			this.preventDraw = true;
+			return m.route.set("/login");
+		}
 		
 		this.postsService.getPosts()
 		.then((posts: any) => {
-			this.posts = posts;
+			dispatch({
+				type: POSTS_TYPES.CREATE_POSTS,
+				posts: posts
+			});
 			
 			this.postsService.on.createPost((post: any) => {
-				this.posts.unshift(post);
+				dispatch({
+					type: POSTS_TYPES.CREATE_POST,
+					post: post
+				});
 			});
 
 			this.postsService.on.createComment((commentResponse: any) => {
-				const currentPost = this.posts.find((post) => post.id == commentResponse.id);
-				currentPost.comments.push(commentResponse.comment);
+				dispatch({
+					type: POSTS_TYPES.CREATE_COMMENT,
+					comment: commentResponse
+				});
 			});
 		})
 		.catch(() => {
@@ -53,7 +66,7 @@ export class MainPageComponent extends Component<any> {
 	}
 
 	goTo(id: number) {
-		const post = document.getElementById("#post-" + id);
+		const post = document.getElementById("post-" + id);
 		if (post) window.scrollTo(0, post.offsetTop);
 	}
 

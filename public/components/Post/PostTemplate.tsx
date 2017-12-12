@@ -4,7 +4,7 @@ import { CommentComponent } from "./Comment/CommentComponent";
 
 export function PostTemplate (this: PostComponent) {
 	return (
-		<div id={"#post-" + this.post.id}>
+		<div id={"post-" + this.post.id}>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<span>Created by: <strong>{this.post.created_by}</strong></span>
@@ -31,7 +31,7 @@ export function PostTemplate (this: PostComponent) {
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="form-group">
-				                <textarea rows="3" id="comment" class="form-control" placeholder="New comment..." style="resize: none"/>
+				                <textarea rows="3" id={"comment"+ this.post.id} class="form-control" placeholder="New comment..." style="resize: none"/>
 				            </div>
 				          	<button type="button" class="btn btn-primary pull-right" onclick={this.create.bind(this)}>Add <i class="glyphicon glyphicon-comment"/></button>
 						</div>

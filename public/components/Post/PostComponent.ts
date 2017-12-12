@@ -17,7 +17,7 @@ export class PostComponent extends Component<PostComponentProps>{
 	}
 
 	create() {
-		const comment = document.getElementById("comment") as HTMLInputElement;
+		const comment = document.getElementById("comment" + this.post.id) as HTMLInputElement;
 
 		this.props.onCreateComment(this.post.id, comment.value)
 		.then(() => {
