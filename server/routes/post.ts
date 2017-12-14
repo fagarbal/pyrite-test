@@ -1,4 +1,4 @@
-import { Route, Get, Post, Body, Query, Storage, Params, Exception, Before, Request} from "pyrite-server";
+import { Route, Get, Post, Body, Query, Storage, Params, Exception, Before, Request, Delete} from "pyrite-server";
 import { Emits, Emit, Broadcast } from "pyrite-server-emitter";
 import { Validation } from "pyrite-server-validations";
 import { posts, users } from "../mocks/mocks";
@@ -35,7 +35,25 @@ export class Posts {
 		return post;
 	}
 
-	@Post("/:id")
+	@Delete("/:id", Number)
+	@Emits
+	deletePost(@Params("id") id: number, @Emit emit: Function) {
+		const postIndex: any = posts.findIndex((post: any) => post.id == id);
+		
+		if (postIndex < 0) throw Exception(400, "Post id invalid");
+
+		posts.splice(postIndex, 1);
+
+		const response = {
+			postId: id
+		}
+
+		emit(response);
+
+		return response;
+	}
+
+	@Post("/:id", Number)
 	@Emits
 	@Validation({
 		message: {
@@ -51,12 +69,35 @@ export class Posts {
 		comment.created_on = (new Date()).toLocaleString();
 
 		const index = post.comments.push(comment);
+		post.comments[index - 1].id = index;
 
 		emit({ id, comment });
 
 		return {
 			success: index
 		};
+	}
+
+	@Delete("/:postId/:commentId", Number, Number)
+	@Emits
+	deleteComment(@Params("postId") postId: number, @Params("commentId") commentId: number,@Emit emit: Function) {
+		const post: any = posts.find((post: any) => post.id == postId);
+		
+		if (!post) throw Exception(400, "Post id invalid");
+		
+		const commentIndex: any = post.comments.find((comment: any) => comment.id == commentId);
+		
+		if (commentIndex < 0) throw Exception(400, "Comment id invalid");
+
+		post.comments.splice(commentIndex, 1);
+
+		const response = {
+			postId, commentId
+		}
+
+		emit(response);
+
+		return response;
 	}
 
 }

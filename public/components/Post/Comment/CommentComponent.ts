@@ -5,6 +5,7 @@ import { dispatch } from "../../../flux";
 import { POSTS_TYPES } from "../../../stores/posts";
 
 interface CommentComponentProps {
+	onDeleteComment: Function,
 	comment: any;
 	post: any;
 	key: number;
@@ -21,10 +22,14 @@ export class CommentComponent extends Component<CommentComponentProps> {
 	}
 
 	delete() {
-		dispatch({
-			type: POSTS_TYPES.DELETE_COMMENT,
-			postId: this.post.id,
-			commentId: this.comment.id
+		console.log(this.comment.id)
+		this.props.onDeleteComment(this.post.id, this.comment.id)
+		.then(() => {
+			dispatch({
+				type: POSTS_TYPES.DELETE_COMMENT,
+				postId: this.post.id,
+				commentId: this.comment.id
+			});
 		});
 	} 
 }

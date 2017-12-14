@@ -4,7 +4,13 @@ import { Post } from "../../components";
 
 export function MainPageTemplate (this: MainPageComponent) {
 	const postsEntries = this.posts.map((post: any) => 
-		<Post key={post.id} post={post} onCreateComment={this.createComment.bind(this)}/>
+		<Post
+			key={post.id}
+			post={post}
+			onCreateComment={this.createComment.bind(this)}
+			onDeleteComment={this.deleteComment.bind(this)}
+			onDeletePost={this.deletePost.bind(this)}
+		/>
 	);
 
 	const postsList = this.posts.map((post: any) => 

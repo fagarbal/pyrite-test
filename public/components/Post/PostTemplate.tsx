@@ -29,7 +29,7 @@ export function PostTemplate (this: PostComponent) {
 			<div class="row">
 				<div class="col-md-10 col-md-offset-2">
 					{this.showComments ? this.post.comments.map((comment: any, index: number) => (
-						<CommentComponent key={index} post={this.post} comment={comment} />
+						<CommentComponent key={index} post={this.post} comment={comment} onDeleteComment={this.props.onDeleteComment.bind(this.props)}/>
 					)): null}
 					<div class="panel panel-default">
 						<div class="panel-body">

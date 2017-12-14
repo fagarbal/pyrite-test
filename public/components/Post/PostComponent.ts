@@ -7,6 +7,8 @@ import { POSTS_TYPES } from "../../stores/posts";
 interface PostComponentProps {
 	post: any;
 	onCreateComment: Function;
+	onDeletePost: Function;
+	onDeleteComment: Function;
 }
 
 @Template(PostTemplate)
@@ -28,9 +30,12 @@ export class PostComponent extends Component<PostComponentProps>{
 	}
 
 	delete() {
-		dispatch({
-			type: POSTS_TYPES.DELETE_POST,
-			postId: this.post.id
+		this.props.onDeletePost(this.post.id)
+		.then(() => {
+			dispatch({
+				type: POSTS_TYPES.DELETE_POST,
+				postId: this.post.id
+			});
 		});
 	} 
 }

@@ -24,6 +24,8 @@ export class MainPageComponent extends Component<any> {
 	$onRemove() {
 		this.postsService.off.createPost();
 		this.postsService.off.createComment();
+		this.postsService.off.deletePost();
+		this.postsService.off.deleteComment();
 	}
 
 	async getPosts() {
@@ -43,10 +45,10 @@ export class MainPageComponent extends Component<any> {
 	}
 
 	createEvents() {
-		this.postsService.on.createPost((post: any) => {
+		this.postsService.on.createPost((postResponse: any) => {
 			dispatch({
 				type: POSTS_TYPES.CREATE_POST,
-				post: post
+				post: postResponse
 			});
 		});
 
@@ -54,6 +56,21 @@ export class MainPageComponent extends Component<any> {
 			dispatch({
 				type: POSTS_TYPES.CREATE_COMMENT,
 				comment: commentResponse
+			});
+		});
+
+		this.postsService.on.deletePost((postResponse: any) => {
+			dispatch({
+				type: POSTS_TYPES.DELETE_POST,
+				postId: postResponse.postId
+			});
+		});
+
+		this.postsService.on.deleteComment((commentResponse: any) => {
+			dispatch({
+				type: POSTS_TYPES.DELETE_COMMENT,
+				postId: commentResponse.postId,
+				commentId: commentResponse.commentId
 			});
 		});
 	}
@@ -67,6 +84,14 @@ export class MainPageComponent extends Component<any> {
 
 	createComment(id: number, message: string) {
 		return this.postsService.createComment(id, { message });
+	}
+
+	deletePost(postId: number) {
+		return this.postsService.deletePost(postId);
+	}
+
+	deleteComment(postId: number, commentId: number) {
+		return this.postsService.deleteComment(postId, commentId);
 	}
 
 	goTo(id: number) {
