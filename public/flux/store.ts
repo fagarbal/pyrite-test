@@ -4,8 +4,9 @@ import { clone } from "./clone";
 export class Store {
 	private state: any;
 	private handlers: any;
+	[key:string]: Function;
 
-	constructor(initialState: any) {
+	constructor(initialState: any, types?: any) {
 		this.state = initialState || {};
 		this.handlers = {};
 
@@ -19,6 +20,14 @@ export class Store {
 				this.state = newState;
 			}
 		});
+
+		if (types) {
+			const names = Object.keys(types).map((type) => types[type]);
+
+			names.forEach((name) => {
+				this.on(name, this[name]);
+			});
+		}
 	}
 	
 	get(attr: string) {

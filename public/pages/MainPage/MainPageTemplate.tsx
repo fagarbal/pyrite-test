@@ -2,16 +2,12 @@ import { m } from "pyrite";
 import { MainPageComponent } from "./MainPageComponent";
 import { Post } from "../../components";
 
-import { PostsStore } from "../../stores/posts";
-
 export function MainPageTemplate (this: MainPageComponent) {
-	const posts = PostsStore.get("posts");
-
-	const postsEntries = posts.map((post: any) => 
+	const postsEntries = this.posts.map((post: any) => 
 		<Post key={post.id} post={post} onCreateComment={this.createComment.bind(this)}/>
 	);
 
-	const postsList = posts.map((post: any) => 
+	const postsList = this.posts.map((post: any) => 
 		<div class="form-group">
 			<a href="javascript:" onclick={this.goTo.bind(this, post.id)}>
 				{post.title}
@@ -46,7 +42,7 @@ export function MainPageTemplate (this: MainPageComponent) {
 						</div>
 					</div>
 				</div>
-				{posts.length ?
+				{this.posts.length ?
 					<div class="panel panel-default" style="margin-top: 20px;">
 						<div class="panel-heading">
 							<strong>Post List</strong>

@@ -18,7 +18,7 @@ export class RegisterPageComponent extends Component<any> {
 		}
 	}
 
-	register() {
+	async register() {
 		this.errors = [];
 
 		const username = document.getElementById("username") as HTMLInputElement;
@@ -29,15 +29,17 @@ export class RegisterPageComponent extends Component<any> {
 			return this.errors = ["The passwords are not the same"];
 		}
 
-		this.authService.register(username.value, password.value)
-		.then((registerResponse: any) => {
+		try {
+			await this.authService.register(username.value, password.value);
+			
 			this.success = true;
 
 			setTimeout(() => m.route.set("/login"), 1000);
 
 			m.redraw();
-		})
-		.catch(this.errorLogin.bind(this));
+		} catch (error) {
+			this.errorLogin(error);
+		}
 	}
 
 	errorLogin(registerError: any) {

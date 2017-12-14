@@ -16,18 +16,20 @@ export class LoginPageComponent extends Component<any>{
 		}
 	}
 
-	login() {
+	async login() {
 		this.errors = [];
 
 		const username = document.getElementById("username") as HTMLInputElement;
 		const password = document.getElementById("username") as HTMLInputElement;
 
-		this.authService.login(username.value, password.value)
-		.then((loginResponse: any) => {
+		try {
+			const loginResponse = await this.authService.login(username.value, password.value);
+
 			localStorage.setItem("token", "Bearer " + loginResponse.token);
 			m.route.set("/main");
-		})
-		.catch(this.errorLogin.bind(this));
+		} catch (error) {
+			this.errorLogin(error);
+		}
 	}
 
 	errorLogin(loginError: any) {

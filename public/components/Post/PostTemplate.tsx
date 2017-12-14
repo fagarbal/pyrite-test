@@ -12,6 +12,9 @@ export function PostTemplate (this: PostComponent) {
 				</div>
 				<div class="panel-body">
 					<p>{this.post.title}</p>
+					<button class="btn btn-danger pull-right" onclick={this.delete.bind(this)}>
+						Delete <i class="glyphicon glyphicon-trash"></i>
+					</button>
 				</div>
 				{this.post.comments.length ?
 					<div class="panel-footer text-right">
@@ -26,7 +29,7 @@ export function PostTemplate (this: PostComponent) {
 			<div class="row">
 				<div class="col-md-10 col-md-offset-2">
 					{this.showComments ? this.post.comments.map((comment: any, index: number) => (
-						<CommentComponent key={index} comment={comment} />
+						<CommentComponent key={index} post={this.post} comment={comment} />
 					)): null}
 					<div class="panel panel-default">
 						<div class="panel-body">

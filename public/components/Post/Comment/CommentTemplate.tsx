@@ -10,6 +10,9 @@ export function CommentTemplate (this: CommentComponent) {
 			</div>
 			<div class="panel-body">
 				<p>{this.comment.message}</p>
+				<button class="btn btn-danger pull-right" onclick={this.delete.bind(this)}>
+					Delete <i class="glyphicon glyphicon-trash"></i>
+				</button>
 			</div>
 		</div>
 	);

@@ -3,8 +3,8 @@ import { MainPageTemplate } from "./MainPageTemplate";
 
 import { services, PostsService } from "../../connect";
 
-import { dispatch } from "../../flux";
-import { POSTS_TYPES } from "../../stores/posts";
+import { dispatch, state } from "../../flux";
+import { POSTS_TYPES, postsStore } from "../../stores/posts";
 
 @Template(MainPageTemplate)
 export class MainPageComponent extends Component<any> {
@@ -14,37 +14,11 @@ export class MainPageComponent extends Component<any> {
 	comments: any = {};
 	showComments: any = {};
 
-	$onInit() {
-		if (!localStorage.getItem("token")) {
-			this.preventDraw = true;
-			return m.route.set("/login");
-		}
-		
-		this.postsService.getPosts()
-		.then((posts: any) => {
-			dispatch({
-				type: POSTS_TYPES.CREATE_POSTS,
-				posts: posts
-			});
-			
-			this.postsService.on.createPost((post: any) => {
-				dispatch({
-					type: POSTS_TYPES.CREATE_POST,
-					post: post
-				});
-			});
+	@state(postsStore, "posts") posts: any;
 
-			this.postsService.on.createComment((commentResponse: any) => {
-				dispatch({
-					type: POSTS_TYPES.CREATE_COMMENT,
-					comment: commentResponse
-				});
-			});
-		})
-		.catch(() => {
-			localStorage.removeItem("token");
-			m.route.set("/login");
-		});
+	$onInit() {
+		this.getPosts();
+		this.createEvents();
 	}
 
 	$onRemove() {
@@ -52,13 +26,43 @@ export class MainPageComponent extends Component<any> {
 		this.postsService.off.createComment();
 	}
 
-	createPost() {
+	async getPosts() {
+		try {
+			const posts = await this.postsService.getPosts()
+
+			dispatch({
+				type: POSTS_TYPES.CREATE_POSTS,
+				posts: posts
+			});
+			
+			
+		} catch(e) {
+			localStorage.removeItem("token");
+			m.route.set("/login");
+		};
+	}
+
+	createEvents() {
+		this.postsService.on.createPost((post: any) => {
+			dispatch({
+				type: POSTS_TYPES.CREATE_POST,
+				post: post
+			});
+		});
+
+		this.postsService.on.createComment((commentResponse: any) => {
+			dispatch({
+				type: POSTS_TYPES.CREATE_COMMENT,
+				comment: commentResponse
+			});
+		});
+	}
+
+	async createPost() {
 		const title = document.getElementById("title") as HTMLInputElement;
 
-		this.postsService.createPost({ title: title.value })
-		.then(() => {
-			title.value = "";
-		});
+		await this.postsService.createPost({ title: title.value });
+		title.value = "";
 	}
 
 	createComment(id: number, message: string) {

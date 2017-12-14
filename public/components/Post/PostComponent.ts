@@ -1,8 +1,10 @@
 import { Component, Template } from "pyrite";
 import { PostTemplate } from "./PostTemplate";
 
+import { dispatch } from "../../flux";
+import { POSTS_TYPES } from "../../stores/posts";
+
 interface PostComponentProps {
-	key: number;
 	post: any;
 	onCreateComment: Function;
 }
@@ -24,4 +26,11 @@ export class PostComponent extends Component<PostComponentProps>{
 			comment.value = "";
 		});
 	}
+
+	delete() {
+		dispatch({
+			type: POSTS_TYPES.DELETE_POST,
+			postId: this.post.id
+		});
+	} 
 }

@@ -1,5 +1,5 @@
 import { Route, Get, Post, Body, Query, Storage, Params, Exception, Before, Request} from "pyrite-server";
-import { Emits, Emit } from "pyrite-server-emitter";
+import { Emits, Emit, Broadcast } from "pyrite-server-emitter";
 import { Validation } from "pyrite-server-validations";
 import { posts, users } from "../mocks/mocks";
 import { checkUser } from "../utils/jwt";
@@ -32,9 +32,7 @@ export class Posts {
 
 		emit(post);
 
-		return {
-			success: post.id
-		};
+		return post;
 	}
 
 	@Post("/:id")
